@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DEPLOY_DIR = 'C:\\xampp\\htdocs\\ra'
+        DEPLOY_DIR = 'C:\\xampp\\htdocs\\'
     }
 
     stages {
@@ -30,7 +30,7 @@ pipeline {
         stage('Done') {
             steps {
                 echo '✅ Deployed successfully!'
-                echo '🌐 Open your app: http://localhost/ra/'
+                echo '🌐 Open your app: http://localhost/'
             }
         }
     }
