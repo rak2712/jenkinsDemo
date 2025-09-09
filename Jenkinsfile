@@ -14,7 +14,7 @@ pipeline {
 
         stage('Deploy to XAMPP') {
             steps {
-                echo "Deploying files to ${env.DEPLOY_DIR}..."
+                echo "Copying files to ${env.DEPLOY_DIR}"
                 bat """
                     if not exist "${env.DEPLOY_DIR}" (
                         echo ERROR: XAMPP htdocs directory not found!
@@ -25,7 +25,7 @@ pipeline {
                     xcopy /Y /F style.css "${env.DEPLOY_DIR}\\"
                     xcopy /Y /F script.js "${env.DEPLOY_DIR}\\"
 
-                    echo ✅ Deployment complete. Access your site at http://localhost/
+                    echo ✅ Deployment complete. Visit http://localhost/
                 """
             }
         }
