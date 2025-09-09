@@ -2,34 +2,35 @@ pipeline {
     agent any
 
     environment {
-        APACHE_HTDOCS = 'C:\\xampp\\htdocs\\calculator-app'  // Folder inside htdocs
+        DEPLOY_DIR = 'C:\\xampp\\htdocs\\ra'
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                echo 'Cloning repository...'
+                echo '📥 Cloning repository...'
                 git url: 'https://github.com/rak2712/Jenkins.git', branch: 'main'
             }
         }
 
-        stage('Deploy to htdocs') {
+        stage('Deploy to Apache htdocs (ra folder)') {
             steps {
-                echo 'Deploying files to Apache htdocs...'
-                
+                echo '🚀 Deploying to Apache htdocs (ra)...'
+
                 bat """
-                if exist "%APACHE_HTDOCS%" (
-                    rmdir /s /q "%APACHE_HTDOCS%"
+                if exist "%DEPLOY_DIR%" (
+                    rmdir /s /q "%DEPLOY_DIR%"
                 )
-                mkdir "%APACHE_HTDOCS%"
-                xcopy * "%APACHE_HTDOCS%" /s /e /y
+                mkdir "%DEPLOY_DIR%"
+                xcopy * "%DEPLOY_DIR%" /s /e /y /i
                 """
             }
         }
 
-        stage('Completed') {
+        stage('Done') {
             steps {
-                echo 'Deployment completed. Open http://localhost/calculator-app in browser.'
+                echo '✅ Deployed successfully!'
+                echo '🌐 Open your app: http://localhost/ra/'
             }
         }
     }
