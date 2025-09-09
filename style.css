@@ -1,0 +1,132 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: rgb(0, 255, 72);
+  background-size: cover;
+  color: #333;
+}
+header, footer {
+  text-align: center;
+  padding: 20px;
+  background: rgba(13, 207, 172, 0.9);
+}
+main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 2rem;
+  gap: 1.5rem;
+}
+.product {
+  background: rgb(158, 162, 159);
+  border-radius: 10px;
+  padding: 1rem;
+  width: 150px;
+  box-shadow: 0 0 10px rgba(219, 8, 8, 0.1);
+  text-align: center;
+}
+.product img {
+  width: 100%;
+  border-radius: 10px;
+  height: 140px;
+  object-fit: cover;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+}
+.modal.show {
+  display: flex;
+}
+.modal-content {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+}
+.close {
+  position: absolute;
+  top: 10px; right: 15px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+label {
+  display: block;
+  margin-bottom: 1rem;
+}
+input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+}
+button {
+  margin-top: 1rem;
+  padding: 0.7rem;
+  cursor: pointer;
+}
+pre {
+  background: #c5a5a5;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+}
+#logoutBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px 15px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#logoutBtn:hover {
+  background-color: #e60000;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.7);
+}
+
+.video-container {
+  position: relative;
+  background: #000;
+  margin: 5% auto;
+  width: 80%;
+  max-width: 800px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.close {
+  position: absolute;
+  top: 10px; right: 20px;
+  color: #fff;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#playVideoBtn {
+  padding: 12px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}

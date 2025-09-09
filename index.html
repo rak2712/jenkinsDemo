@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AgriSell - Farmer Product Portal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>🌾 AgriSell - Sell Your Crops</h1>
+    <p>Get fair prices directly from the warehouse</p>
+    <button id="logoutBtn">Logout</button>
+  </header>
+  <button id="playVideoBtn">🎬 Watch How AgriSell Works</button>
+
+<!-- Video Modal -->
+<div id="videoModal" class="modal">
+  <div class="modal-content video-container">
+    <span class="close" id="closeVideo">&times;</span>
+    <iframe id="agriVideo"
+      width="100%" height="400"
+      src=""
+      title="AgriSell Video"
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen>
+    </iframe>
+  </div>
+</div>
+  <main id="product-list"></main>
+
+  <div id="sellModal" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <span id="closeModal" class="close">&times;</span>
+      <form id="sellForm">
+        <h2>Sell Product</h2>
+        <div id="step1">
+          <label>Product: <input id="productName" type="text" readonly /></label>
+          <label>Quantity (kg): <input id="quantity" type="number" min="1" required /></label>
+          <label>Your Name: <input id="name" type="text" required /></label>
+          <label>Phone Number: <input id="phone" type="tel" required /></label>
+          <button type="button" id="nextBtn">Next</button>
+        </div>
+        <div id="step2" style="display:none;">
+          <label>Bank Name: <input id="bankName" type="text" required /></label>
+          <label>Account Number: <input id="accountNo" type="text" required /></label>
+          <label>IFSC Code: <input id="ifsc" type="text" required /></label>
+          <pre id="estimateResult"></pre>
+          <button type="button" id="backBtn">Back</button>
+          <button type="submit">Submit</button>
+        </div>
+        <p id="finalMessage" style="display:none;"></p>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 AgriSell. All rights reserved. ⚠️ Misuse of platform may lead to action.</p>
+  </footer>
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>
