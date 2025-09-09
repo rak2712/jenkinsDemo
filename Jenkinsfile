@@ -14,13 +14,12 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                echo 'Installing dependencies (if package.json exists)...'
+                echo 'Installing dependencies...'
                 bat '''
                     if exist package.json (
-                        echo Found package.json, running npm install...
                         npm install
                     ) else (
-                        echo No package.json, skipping npm install.
+                        echo No package.json found. Skipping npm install.
                     )
                 '''
             }
@@ -28,13 +27,12 @@ pipeline {
 
         stage('Lint Code') {
             steps {
-                echo 'Running lint (if defined)...'
+                echo 'Linting code...'
                 bat '''
                     if exist package.json (
-                        echo Running npm run lint...
-                        npm run lint || echo "No lint script found, skipping."
+                        npm run lint || echo "Lint script not found or failed, skipping..."
                     ) else (
-                        echo No package.json, skipping lint.
+                        echo No package.json found. Skipping lint.
                     )
                 '''
             }
@@ -42,23 +40,23 @@ pipeline {
 
         stage('Deploy to XAMPP') {
             steps {
-                echo "Deploying files to ${env.DEPLOY_DIR}"
+                echo "Deploying files to ${env.DEPLOY_DIR}..."
                 bat """
                     if not exist "${env.DEPLOY_DIR}" (
-                        echo ERROR: ${env.DEPLOY_DIR} not found
+                        echo ERROR: Directory ${env.DEPLOY_DIR} does not exist.
                         exit 1
                     )
                     xcopy /Y /F index.html "${env.DEPLOY_DIR}\\"
                     xcopy /Y /F style.css "${env.DEPLOY_DIR}\\"
                     xcopy /Y /F script.js "${env.DEPLOY_DIR}\\"
-                    echo ✅ Deployed successfully!
+                    echo Deployment complete.
                 """
             }
         }
 
-        stage('Done') {
+        stage('Finish') {
             steps {
-                echo '🌐 Visit http://localhost/ in your browser.'
+                echo '✅ Done. Open http://localhost/ in your browser.'
             }
         }
     }

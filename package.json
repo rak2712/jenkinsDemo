@@ -2,8 +2,8 @@
   "name": "calculator-app",
   "version": "1.0.0",
   "scripts": {
-    "lint": "echo 'Skipping lint...'",
-    "test": "echo 'No tests defined'"
+    "lint": "echo 'No linting configured. Skipping...'",
+    "test": "echo 'No tests configured. Skipping...'"
   },
   "dependencies": {}
 }
