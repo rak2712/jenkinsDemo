@@ -1,18 +1,7 @@
 pipeline {
     agent any
 
-    environment {
-        NODE_ENV = 'development'
-    }
-
     stages {
-        stage('Checkout') {
-            steps {
-                echo 'Checking out code...'
-                checkout scm
-            }
-        }
-
         stage('Install Dependencies') {
             steps {
                 echo 'Installing dependencies...'
@@ -36,27 +25,16 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'Building project...'
-                // Placeholder - Add build commands here
-                echo 'Build stage completed.'
+                echo 'Build step...'
+                // Add your build steps if applicable
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploying project...'
-                // Placeholder - Add deploy commands here
-                echo 'Deployment stage completed.'
+                echo 'Deploying app...'
+                // Add your deployment steps here
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Pipeline completed successfully!'
-        }
-        failure {
-            echo 'Pipeline failed.'
         }
     }
 }

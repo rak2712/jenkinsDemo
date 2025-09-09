@@ -1,7 +1,7 @@
 {
   "name": "calculator-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple calculator app using Express and Bootstrap",
   "main": "app.js",
   "scripts": {
     "lint": "echo \"No lint configured\" && exit 0",
