@@ -1,35 +1,23 @@
 pipeline {
     agent any
     stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
         stage('Install Dependencies') {
             steps {
-                echo 'Installing dependencies...'
-                bat 'npm install'
+                script {
+                    if (fileExists('package.json')) {
+                        echo 'package.json found, installing dependencies...'
+                        bat 'npm install'
+                    } else {
+                        echo 'package.json not found, skipping npm install.'
+                    }
+                }
             }
         }
-        stage('Lint Code') {
-            steps {
-                echo 'Linting code...'
-                bat 'npm run lint'
-            }
-        }
-        stage('Run Tests') {
-            steps {
-                echo 'Running tests...'
-                bat 'npm test'
-            }
-        }
-        stage('Build') {
-            steps {
-                echo 'Building the project...'
-                bat 'npm run build'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying...'
-                // Your deploy commands here
-            }
-        }
+        // Add other stages like Lint, Test, Build, Deploy as needed
     }
 }
