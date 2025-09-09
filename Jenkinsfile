@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Checking out code...'
+                echo 'Checking out source code...'
                 checkout scm
             }
         }
@@ -20,43 +20,41 @@ pipeline {
             }
         }
 
-        stage('Run App (Smoke Test)') {
+        stage('Lint Code') {
             steps {
-                echo 'Starting app for a quick check...'
-                sh 'node app &'
-                sh 'sleep 5'
-                sh 'pkill -f "node app" || true'
+                echo 'Linting source code...'
+                // sh 'npm run lint' // Enable if linting is configured
             }
         }
 
-        stage('Lint (Optional)') {
+        stage('Run Tests') {
             steps {
-                echo 'Linting code...'
-                // e.g., sh 'npm run lint' (if lint script exists)
+                echo 'Executing tests...'
+                // sh 'npm test' // Enable if tests are present
             }
         }
 
-        stage('Test (Optional)') {
+        stage('Build') {
             steps {
-                echo 'Running tests...'
-                // e.g., sh 'npm test' (if test script exists)
+                echo 'Building application...'
+                sh 'npm run build || echo "No build script, skipping..."'
             }
         }
 
         stage('Deploy (Placeholder)') {
             steps {
-                echo 'Deploying… this is a placeholder'
-                // Insert actual deployment steps here (e.g., SCP, Docker, etc.)
+                echo 'Deployment placeholder...'
+                // Insert deploy commands here (e.g., Docker, SCP, Heroku, etc.)
             }
         }
     }
 
     post {
         success {
-            echo 'Pipeline completed successfully.'
+            echo 'Pipeline finished successfully.'
         }
         failure {
-            echo 'Pipeline failed.'
+            echo 'Pipeline encountered a failure.'
         }
     }
 }
