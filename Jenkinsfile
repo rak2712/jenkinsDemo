@@ -2,35 +2,37 @@ pipeline {
     agent any
 
     environment {
-        DEPLOY_DIR = 'C:\\xampp\\htdocs\\'
+        DEPLOY_DIR = 'C:\\xampp\\htdocs'
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                echo '📥 Cloning repository...'
+                echo '📥 Cloning from GitHub...'
                 git url: 'https://github.com/rak2712/Jenkins.git', branch: 'main'
             }
         }
 
-        stage('Deploy to Apache htdocs (ra folder)') {
+        stage('Deploy to XAMPP') {
             steps {
-                echo '🚀 Deploying to Apache htdocs (ra)...'
-
+                echo "🚀 Copying files to %DEPLOY_DIR%"
                 bat """
-                if exist "%DEPLOY_DIR%" (
-                    rmdir /s /q "%DEPLOY_DIR%"
-                )
-                mkdir "%DEPLOY_DIR%"
-                xcopy * "%DEPLOY_DIR%" /s /e /y /i
+                    if not exist "%DEPLOY_DIR%" (
+                        echo ❌ ERROR: %DEPLOY_DIR% does not exist.
+                        exit 1
+                    )
+                    echo ✅ Copying files...
+                    xcopy /Y /F index.html "%DEPLOY_DIR%"
+                    xcopy /Y /F style.css "%DEPLOY_DIR%"
+                    xcopy /Y /F script.js "%DEPLOY_DIR%"
                 """
             }
         }
 
         stage('Done') {
             steps {
-                echo '✅ Deployed successfully!'
-                echo '🌐 Open your app: http://localhost/'
+                echo '✅ Deployment complete!'
+                echo '🌐 Open http://localhost/ in your browser.'
             }
         }
     }
