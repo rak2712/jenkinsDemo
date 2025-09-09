@@ -1,0 +1,9 @@
+{
+  "name": "calculator-app",
+  "version": "1.0.0",
+  "scripts": {
+    "lint": "echo 'Skipping lint...'",
+    "test": "echo 'No tests defined'"
+  },
+  "dependencies": {}
+}
