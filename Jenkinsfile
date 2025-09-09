@@ -18,7 +18,6 @@ pipeline {
         stage('Lint Code') {
             steps {
                 script {
-                    // Read package.json and check if 'lint' script exists
                     def pkg = readJSON file: 'package.json'
                     if (pkg.scripts?.lint) {
                         echo 'Running lint script...'
@@ -34,7 +33,6 @@ pipeline {
             steps {
                 script {
                     def pkg = readJSON file: 'package.json'
-                    // Skip if test script is the default failing one or missing
                     if (pkg.scripts?.test && !pkg.scripts.test.contains('exit 1')) {
                         echo 'Running test script...'
                         bat 'npm test'
@@ -47,13 +45,13 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'Build step - add your build commands here if needed.'
+                echo 'Build stage - add your build commands here if any.'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploy step - add your deploy commands here if needed.'
+                echo 'Deploy stage - add your deploy commands here if any.'
             }
         }
     }
