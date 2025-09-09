@@ -15,31 +15,41 @@ pipeline {
             }
         }
 
-        stage('Lint Code') {
+        stage('Check package.json scripts') {
             steps {
                 script {
-                    def pkg = readJSON file: 'package.json'
-                    if (pkg.scripts?.lint) {
-                        echo 'Running lint script...'
-                        bat 'npm run lint'
-                    } else {
-                        echo 'No lint script found, skipping lint stage.'
-                    }
+                    // Read package.json as text and parse JSON
+                    def jsonText = readFile 'package.json'
+                    echo "package.json content: ${jsonText}"
+
+                    def pkg = readJSON text: jsonText
+                    echo "Parsed package.json scripts: ${pkg.scripts}"
+
+                    // Store scripts info to env variables for use in later stages
+                    env.LINT_EXISTS = pkg.scripts?.lint ? 'true' : 'false'
+                    env.TEST_EXISTS = pkg.scripts?.test ? 'true' : 'false'
+                    env.TEST_IS_DEFAULT_FAIL = (pkg.scripts?.test?.contains('exit 1')) ? 'true' : 'false'
                 }
             }
         }
 
-        stage('Run Tests') {
+        stage('Lint Code') {
+            when {
+                expression { env.LINT_EXISTS == 'true' }
+            }
             steps {
-                script {
-                    def pkg = readJSON file: 'package.json'
-                    if (pkg.scripts?.test && !pkg.scripts.test.contains('exit 1')) {
-                        echo 'Running test script...'
-                        bat 'npm test'
-                    } else {
-                        echo 'No valid test script found, skipping tests.'
-                    }
-                }
+                echo 'Running lint script...'
+                bat 'npm run lint'
+            }
+        }
+
+        stage('Run Tests') {
+            when {
+                expression { env.TEST_EXISTS == 'true' && env.TEST_IS_DEFAULT_FAIL == 'false' }
+            }
+            steps {
+                echo 'Running test script...'
+                bat 'npm test'
             }
         }
 
