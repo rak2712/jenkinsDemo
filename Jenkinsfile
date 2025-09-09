@@ -1,50 +1,62 @@
 pipeline {
     agent any
+
+    environment {
+        NODE_ENV = 'development'
+    }
+
     stages {
         stage('Checkout') {
             steps {
+                echo 'Checking out code...'
                 checkout scm
             }
         }
+
         stage('Install Dependencies') {
             steps {
+                echo 'Installing dependencies...'
                 bat 'npm install'
             }
         }
-        stage('Check scripts') {
-            steps {
-                script {
-                    def pkg = readJSON file: 'package.json'
-                    env.LINT_EXISTS = pkg.scripts?.lint ? 'true' : 'false'
-                    env.TEST_EXISTS = pkg.scripts?.test ? 'true' : 'false'
-                }
-            }
-        }
+
         stage('Lint Code') {
-            when {
-                expression { env.LINT_EXISTS == 'true' }
-            }
             steps {
+                echo 'Linting code...'
                 bat 'npm run lint'
             }
         }
+
         stage('Run Tests') {
-            when {
-                expression { env.TEST_EXISTS == 'true' }
-            }
             steps {
+                echo 'Running tests...'
                 bat 'npm test'
             }
         }
+
         stage('Build') {
             steps {
-                echo 'Build stage - add your commands here'
+                echo 'Building project...'
+                // Placeholder - Add build commands here
+                echo 'Build stage completed.'
             }
         }
+
         stage('Deploy') {
             steps {
-                echo 'Deploy stage - add your commands here'
+                echo 'Deploying project...'
+                // Placeholder - Add deploy commands here
+                echo 'Deployment stage completed.'
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed.'
         }
     }
 }
