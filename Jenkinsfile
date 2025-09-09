@@ -8,22 +8,16 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                script {
-                    if (fileExists('package.json')) {
-                        echo 'Installing dependencies...'
-                        bat 'npm install'
-                    } else {
-                        echo 'package.json not found, skipping npm install.'
-                    }
-                }
+                echo 'Installing dependencies...'
+                bat 'npm install'
             }
         }
         stage('Lint Code') {
             steps {
                 script {
-                    def packageJson = readJSON file: 'package.json'
-                    if (packageJson.scripts?.lint) {
-                        echo 'Lint script found, running lint...'
+                    def pkg = readJSON file: 'package.json'
+                    if (pkg.scripts?.lint) {
+                        echo 'Running lint script...'
                         bat 'npm run lint'
                     } else {
                         echo 'No lint script found, skipping lint stage.'
@@ -34,16 +28,25 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    def packageJson = readJSON file: 'package.json'
-                    if (packageJson.scripts?.test) {
-                        echo 'Test script found, running tests...'
+                    def pkg = readJSON file: 'package.json'
+                    if (pkg.scripts?.test && pkg.scripts.test != "echo \"Error: no test specified\" && exit 1") {
+                        echo 'Running test script...'
                         bat 'npm test'
                     } else {
-                        echo 'No test script found, skipping tests.'
+                        echo 'No valid test script found, skipping tests.'
                     }
                 }
             }
         }
-        // Add Build, Deploy stages similarly
+        stage('Build') {
+            steps {
+                echo 'Build step - define your build commands here if any.'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploy step - define your deploy commands here if any.'
+            }
+        }
     }
 }
